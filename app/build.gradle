@@ -27,7 +27,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // YouTubeExtractor
-    implementation 'com.github.Commit451:YouTubeExtractor:2.1.0'
+    implementation 'com.github.Commit451:YouTubeExtractor:4.2.1'
     //  RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }
