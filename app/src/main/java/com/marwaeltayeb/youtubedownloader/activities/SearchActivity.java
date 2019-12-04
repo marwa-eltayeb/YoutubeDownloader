@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import com.marwaeltayeb.youtubedownloader.PlaylistActivity;
 import com.marwaeltayeb.youtubedownloader.R;
 
 public class SearchActivity extends AppCompatActivity {
