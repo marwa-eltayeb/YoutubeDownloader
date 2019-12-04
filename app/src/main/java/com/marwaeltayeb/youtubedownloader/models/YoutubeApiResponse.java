@@ -1,4 +1,4 @@
-package com.marwaeltayeb.youtubedownloader.model;
+package com.marwaeltayeb.youtubedownloader.models;
 
 import java.util.List;
 
