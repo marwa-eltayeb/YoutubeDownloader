@@ -1,56 +1,33 @@
 package com.marwaeltayeb.youtubedownloader.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.EditText;
 
+import com.marwaeltayeb.youtubedownloader.PlaylistActivity;
 import com.marwaeltayeb.youtubedownloader.R;
-import com.marwaeltayeb.youtubedownloader.model.YoutubeApiResponse;
-import com.marwaeltayeb.youtubedownloader.network.RetrofitClient;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SearchActivity extends AppCompatActivity {
 
+    private EditText searchEditText;
+    public static final String KEYWORD = "keyword";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-
-        RetrofitClient.getInstance()
-                .getYoutubeService().getVideos("snippet",25,"surfing","")
-                .enqueue(new Callback<YoutubeApiResponse>() {
-                    @Override
-                    public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
-                        YoutubeApiResponse youtubeApiResponse = response.body();
-
-                        if(youtubeApiResponse.getItems() != null){
-                            Toast.makeText(SearchActivity.this, youtubeApiResponse.getItems().size() + " ", Toast.LENGTH_SHORT).show();
-                        }
-
-                        if (!response.isSuccessful()) {
-                            Toast.makeText(SearchActivity.this, "Code: " + response.code(), Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<YoutubeApiResponse> call, Throwable t) {
-                        Toast.makeText(SearchActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
-
-
-
+        searchEditText = findViewById(R.id.searchEditText);
     }
 
 
-
+    public void Search(View view) {
+        Intent intent = new Intent(SearchActivity.this, PlaylistActivity.class);
+        String keyword = searchEditText.getText().toString().trim();
+        intent = intent.putExtra(KEYWORD, keyword);
+        startActivity(intent);
+    }
 }
 
