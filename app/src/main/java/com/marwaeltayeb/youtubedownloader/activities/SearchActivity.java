@@ -25,6 +25,9 @@ public class SearchActivity extends AppCompatActivity {
     public void Search(View view) {
         Intent intent = new Intent(SearchActivity.this, PlaylistActivity.class);
         String keyword = searchEditText.getText().toString().trim();
+        if(keyword.equals("")){
+            return;
+        }
         intent = intent.putExtra(KEYWORD, keyword);
         startActivity(intent);
     }
