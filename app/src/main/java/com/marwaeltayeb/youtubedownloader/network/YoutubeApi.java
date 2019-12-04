@@ -1,6 +1,6 @@
 package com.marwaeltayeb.youtubedownloader.network;
 
-import com.marwaeltayeb.youtubedownloader.model.YoutubeApiResponse;
+import com.marwaeltayeb.youtubedownloader.models.YoutubeApiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
