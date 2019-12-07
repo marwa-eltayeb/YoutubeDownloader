@@ -4,6 +4,7 @@ import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.marwaeltayeb.youtubedownloader.YoutubeConfig;
 import com.marwaeltayeb.youtubedownloader.activities.PlaylistActivity;
 import com.marwaeltayeb.youtubedownloader.models.Item;
 import com.marwaeltayeb.youtubedownloader.models.YoutubeApiResponse;
@@ -22,7 +23,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
     public void loadInitial(@NonNull LoadInitialParams<String> params, @NonNull final LoadInitialCallback<String, Item> callback) {
 
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART,MAX_SIZE, PlaylistActivity.keyWord,API_KEY)
+                .getYoutubeService().getVideos(PART,MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
