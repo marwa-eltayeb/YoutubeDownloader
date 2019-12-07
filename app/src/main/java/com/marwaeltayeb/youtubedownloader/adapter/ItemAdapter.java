@@ -21,10 +21,22 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
 
 
     private Context mCtx;
+    Item item;
 
-    public ItemAdapter(Context mCtx) {
+    // Create a final private ItemAdapterOnClickHandler called mClickHandler
+    private ItemAdapterOnClickHandler clickHandler;
+
+    /**
+     * The interface that receives onClick messages.
+     */
+    public interface ItemAdapterOnClickHandler {
+        void onClick(String videoId);
+    }
+
+    public ItemAdapter(Context mCtx, ItemAdapterOnClickHandler clickHandler) {
         super(DIFF_CALLBACK);
         this.mCtx = mCtx;
+        this.clickHandler = clickHandler;
     }
 
     @NonNull
@@ -37,7 +49,7 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
 
-        Item item = getItem(position);
+        item = getItem(position);
 
         if (item != null) {
             holder.videoTitle.setText(item.getSnippet().getTitle());
@@ -69,7 +81,7 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
                 }
             };
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
+    class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         // Create view instances
         TextView videoTitle;
@@ -77,13 +89,22 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
         TextView channelTitle;
         TextView publicationDate;
 
-        public ItemViewHolder(View itemView) {
+        private ItemViewHolder(View itemView) {
             super(itemView);
             videoTitle = itemView.findViewById(R.id.titleOfVideo);
             videoImage = itemView.findViewById(R.id.imageOfVideo);
             channelTitle = itemView.findViewById(R.id.titleOfChannel);
             publicationDate = itemView.findViewById(R.id.dataOfPublication);
+            // Register a callback to be invoked when this view is clicked.
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            // Get the id of the video
+            String videoId = item.getVideoId().getId();
+            // Send videoId through click
+            clickHandler.onClick(videoId);
         }
     }
 }
