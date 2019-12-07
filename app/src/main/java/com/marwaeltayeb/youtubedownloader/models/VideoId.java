@@ -1,9 +1,9 @@
 package com.marwaeltayeb.youtubedownloader.models;
 
 public class VideoId {
-    private String Id;
+    private String videoId;
 
     public String getId() {
-        return Id;
+        return videoId;
     }
 }

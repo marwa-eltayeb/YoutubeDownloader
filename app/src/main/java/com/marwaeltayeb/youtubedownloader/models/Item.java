@@ -1,11 +1,11 @@
 package com.marwaeltayeb.youtubedownloader.models;
 
 public class Item {
-    private VideoId videoId;
+    private VideoId id;
     public Snippet snippet;
 
     public VideoId getVideoId() {
-        return videoId;
+        return id;
     }
 
     public Snippet getSnippet() {
