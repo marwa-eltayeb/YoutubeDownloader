@@ -12,14 +12,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.PlaylistActivity"
-                  android:label="@string/playlist"
-                  android:parentActivityName=".activities.SearchActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".activities.SearchActivity" />
+        <activity
+            android:name=".activities.DownloadActivity"
+            android:label="@string/download"
+            android:parentActivityName=".activities.PlaylistActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.PlaylistActivity" />
         </activity>
 
+        <activity
+            android:name=".activities.PlaylistActivity"
+            android:label="@string/playlist"
+            android:parentActivityName=".activities.SearchActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.SearchActivity" />
+        </activity>
         <activity android:name=".activities.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
