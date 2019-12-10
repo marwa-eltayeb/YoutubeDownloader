@@ -3,24 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#E6E6E6"
+    android:background="#F1F1F1"
     android:padding="10dp"
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/titleOfChannel"
-        android:layout_width="match_parent"
+        android:id="@+id/resolutionTextView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1.3"
+        android:layout_weight=".3"
         android:textColor="#444444"
         android:layout_gravity="center"
         android:textSize="20sp"
-        tools:text="360p - webm" />
+        tools:text="360p" />
+
+
+    <TextView
+        android:id="@+id/formatTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".9"
+        android:textColor="#444444"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        tools:text="webm" />
 
     <ImageView
         android:id="@+id/img_download"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_file_download_black_24dp"
-        android:layout_weight=".1" />
+        android:contentDescription="@string/download" />
 </LinearLayout>
