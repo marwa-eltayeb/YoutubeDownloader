@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#F1F1F1"
-    android:padding="10dp"
+    android:padding="27dp"
     android:orientation="horizontal">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_weight=".3"
         android:textColor="#444444"
         android:layout_gravity="center"
-        android:textSize="20sp"
+        android:textSize="25sp"
         tools:text="360p" />
 
 
@@ -25,7 +25,7 @@
         android:layout_weight=".9"
         android:textColor="#444444"
         android:layout_gravity="center"
-        android:textSize="20sp"
+        android:textSize="25sp"
         tools:text="webm" />
 
     <ImageView
