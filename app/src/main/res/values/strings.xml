@@ -8,4 +8,30 @@
     <string name="video">Video</string>
     <string name="titleOfVideo">How to overcome Procrastination</string>
     <string name="download">Download</string>
+
+
+    <!-- Date Utils -->
+    <string name="date_util_term_less">less than</string>
+    <string name="date_util_term_a">a</string>
+    <string name="date_util_term_an">an</string>
+
+    <string name="date_util_unit_second">second</string>
+    <string name="date_util_unit_seconds">seconds</string>
+    <string name="date_util_unit_minute">minute</string>
+    <string name="date_util_unit_minutes">minutes</string>
+    <string name="date_util_unit_hour">hour</string>
+    <string name="date_util_unit_hours">hours</string>
+    <string name="date_util_unit_day">day</string>
+    <string name="date_util_unit_days">days</string>
+    <string name="date_util_unit_month">month</string>
+    <string name="date_util_unit_months">months</string>
+    <string name="date_util_unit_year">year</string>
+    <string name="date_util_unit_years">years</string>
+
+    <string name="date_util_prefix_lt">less than a</string>
+    <string name="date_util_prefix_about">about</string>
+    <string name="date_util_prefix_over">over</string>
+    <string name="date_util_prefix_almost">almost</string>
+
+    <string name="date_util_suffix">ago</string>
 </resources>

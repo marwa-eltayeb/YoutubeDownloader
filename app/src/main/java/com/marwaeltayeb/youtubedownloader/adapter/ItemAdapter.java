@@ -15,7 +15,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.marwaeltayeb.youtubedownloader.R;
+import com.marwaeltayeb.youtubedownloader.Utility.DateUtils;
 import com.marwaeltayeb.youtubedownloader.models.Item;
+
+import java.util.Date;
 
 public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHolder> {
 
@@ -60,7 +63,9 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
 
             holder.channelTitle.setText(item.getSnippet().getChannelTitle());
 
-            holder.publicationDate.setText(item.getSnippet().getPublishedAt());
+            Date convertedDate = DateUtils.convertStringToDate(item.getSnippet().getPublishedAt());
+            String timeAgo = DateUtils.getTimeAgo(convertedDate,mCtx);
+            holder.publicationDate.setText(timeAgo);
         } else {
             Toast.makeText(mCtx, "Item is null", Toast.LENGTH_LONG).show();
         }
