@@ -15,7 +15,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.marwaeltayeb.youtubedownloader.R;
-import com.marwaeltayeb.youtubedownloader.YoutubeConfig;
+import com.marwaeltayeb.youtubedownloader.Utility.YoutubeConfig;
 import com.marwaeltayeb.youtubedownloader.adapter.DownloadAdapter;
 
 import java.util.List;

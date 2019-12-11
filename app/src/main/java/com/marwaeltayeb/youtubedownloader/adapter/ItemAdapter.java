@@ -21,7 +21,7 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
 
 
     private Context mCtx;
-    Item item;
+    private Item item;
 
     // Create a final private ItemAdapterOnClickHandler called mClickHandler
     private ItemAdapterOnClickHandler clickHandler;
@@ -53,7 +53,7 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
 
         if (item != null) {
             holder.videoTitle.setText(item.getSnippet().getTitle());
-            // Load the profile image into ImageView
+            // Load the video image into ImageView
             Glide.with(mCtx)
                     .load(item.getSnippet().getThumbnail().getImageInfo().getUrl())
                     .into(holder.videoImage);

@@ -1,4 +1,4 @@
-package com.marwaeltayeb.youtubedownloader;
+package com.marwaeltayeb.youtubedownloader.Utility;
 
 public class YoutubeConfig {
 

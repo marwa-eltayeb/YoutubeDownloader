@@ -4,7 +4,7 @@ import android.arch.paging.PageKeyedDataSource;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.marwaeltayeb.youtubedownloader.YoutubeConfig;
+import com.marwaeltayeb.youtubedownloader.Utility.YoutubeConfig;
 import com.marwaeltayeb.youtubedownloader.activities.PlaylistActivity;
 import com.marwaeltayeb.youtubedownloader.models.Item;
 import com.marwaeltayeb.youtubedownloader.models.YoutubeApiResponse;
