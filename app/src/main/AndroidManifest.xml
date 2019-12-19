@@ -15,6 +15,7 @@
         <activity
             android:name=".activities.DownloadActivity"
             android:label="@string/download"
+            android:launchMode="singleTop"
             android:parentActivityName=".activities.PlaylistActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -24,11 +25,13 @@
         <activity
             android:name=".activities.PlaylistActivity"
             android:label="@string/playlist"
+            android:launchMode="singleTop"
             android:parentActivityName=".activities.SearchActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.SearchActivity" />
         </activity>
+
         <activity android:name=".activities.SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
