@@ -1,8 +1,9 @@
 package com.marwaeltayeb.youtubedownloader.network;
 
-import android.arch.paging.PageKeyedDataSource;
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.paging.PageKeyedDataSource;
 
 import com.marwaeltayeb.youtubedownloader.Utility.YoutubeConfig;
 import com.marwaeltayeb.youtubedownloader.activities.PlaylistActivity;
@@ -33,8 +34,9 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
                             callback.onResult(youtubeApiResponse.getItems(), null, youtubeApiResponse.getNextPageToken());
                         }
 
-                        if (youtubeApiResponse.getItems() != null) {
-                            Log.d("SizeOfVideos", youtubeApiResponse.getItems().size() + " ");
+                        if (youtubeApiResponse.getItems() == null) {
+                            Log.d("Quota", "Quota of Youtube Data Api is finished");
+                            return;
                         }
 
                         if (!response.isSuccessful()) {
