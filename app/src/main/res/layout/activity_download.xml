@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activities.DownloadActivity">
 
-    <view
-        android:id="@+id/youtubePlay"
-        class="com.google.android.youtube.player.YouTubePlayerView"
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtube_player_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"/>
+        android:layout_height="350dp"
+        app:enableAutomaticInitialization="true"
+        app:handleNetworkEvents="true"
+        app:showFullScreenButton="true" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/downloadList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:listitem="@layout/download_item"
-        android:layout_weight="2"/>
+        android:layout_weight="2"
+        tools:listitem="@layout/download_item" />
 </LinearLayout>
