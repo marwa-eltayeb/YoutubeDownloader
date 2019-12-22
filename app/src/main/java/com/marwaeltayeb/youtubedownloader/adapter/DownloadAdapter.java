@@ -3,14 +3,15 @@ package com.marwaeltayeb.youtubedownloader.adapter;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.commit451.youtubeextractor.VideoStream;
 import com.marwaeltayeb.youtubedownloader.R;
@@ -20,9 +21,7 @@ import java.util.List;
 public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.DownloadViewHolder> {
 
     private Context mContext;
-
     private List<VideoStream> videoStreamsList;
-
     private int mItemSelected= -1;
 
     public DownloadAdapter(Context mContext, List<VideoStream> videoStreamsList) {
@@ -46,7 +45,6 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
 
         holder.resolutionTextView.setText(resolution);
         holder.formatTextView.setText(format);
-
     }
 
     @Override
@@ -56,7 +54,6 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
         }
         return videoStreamsList.size();
     }
-
 
     class DownloadViewHolder extends RecyclerView.ViewHolder{
         // Create view instances
@@ -82,9 +79,6 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
                 }
             });
         }
-
-
-
     }
 
     private void download(String url){
@@ -92,13 +86,11 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
         Uri uri = Uri.parse(url);
 
         DownloadManager.Request request = new DownloadManager.Request(uri);
-        request.setTitle("My File");
+        request.setTitle("Video File");
         request.setDescription("Downloading");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setVisibleInDownloadsUi(false);
 
         downloadmanager.enqueue(request);
     }
-
-
 }
