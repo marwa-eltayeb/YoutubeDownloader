@@ -1,17 +1,19 @@
 package com.marwaeltayeb.youtubedownloader.adapter;
 
 import android.annotation.SuppressLint;
-import android.arch.paging.PagedListAdapter;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.paging.PagedList;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.marwaeltayeb.youtubedownloader.R;
@@ -22,9 +24,8 @@ import java.util.Date;
 
 public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHolder> {
 
-
     private Context mCtx;
-    private Item item;
+    private int mItemSelected= -1;
 
     // Create a final private ItemAdapterOnClickHandler called mClickHandler
     private ItemAdapterOnClickHandler clickHandler;
@@ -52,7 +53,7 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
 
-        item = getItem(position);
+        Item item = getItem(position);
 
         if (item != null) {
             holder.videoTitle.setText(item.getSnippet().getTitle());
@@ -69,6 +70,11 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
         } else {
             Toast.makeText(mCtx, "Item is null", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public PagedList<Item> getCurrentList() {
+        return super.getCurrentList();
     }
 
     // It determine if two list objects are the same or not
@@ -106,8 +112,14 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
 
         @Override
         public void onClick(View v) {
+            // Get the position of the view in the adapter
+            mItemSelected = getAdapterPosition();
+            notifyDataSetChanged();
             // Get the id of the video
-            String videoId = item.getVideoId().getId();
+            String videoId = getCurrentList().get(mItemSelected).getVideoId().getId();
+            if(videoId == null){
+                return;
+            }
             // Send videoId through click
             clickHandler.onClick(videoId);
         }
