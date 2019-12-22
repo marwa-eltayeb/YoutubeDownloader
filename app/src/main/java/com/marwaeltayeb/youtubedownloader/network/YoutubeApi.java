@@ -9,6 +9,6 @@ import retrofit2.http.Query;
 public interface YoutubeApi {
 
     @GET("search")
-    Call<YoutubeApiResponse>getVideos(@Query("part") String part, @Query("maxResults") int resultNumbers, @Query("q") String keyword, @Query("key") String key);
+    Call<YoutubeApiResponse>getVideos(@Query("part") String part,@Query("type") String type,@Query("maxResults") int resultNumbers, @Query("q") String keyword, @Query("key") String key);
 
 }

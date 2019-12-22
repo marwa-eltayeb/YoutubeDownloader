@@ -17,13 +17,14 @@ import retrofit2.Response;
 public class ItemDataSource extends PageKeyedDataSource<String, Item> {
 
     private static final String PART = "snippet";
+    private static final String TYPE = "video";
     public static final int MAX_SIZE = 25;
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<String> params, @NonNull final LoadInitialCallback<String, Item> callback) {
 
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
+                .getYoutubeService().getVideos(PART, TYPE, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
@@ -54,7 +55,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
     @Override
     public void loadBefore(@NonNull final LoadParams<String> params, @NonNull final LoadCallback<String, Item> callback) {
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
+                .getYoutubeService().getVideos(PART, TYPE, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
@@ -78,7 +79,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
     @Override
     public void loadAfter(@NonNull final LoadParams<String> params, @NonNull final LoadCallback<String, Item> callback) {
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
+                .getYoutubeService().getVideos(PART, TYPE, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
