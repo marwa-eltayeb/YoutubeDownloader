@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.marwaeltayeb.youtubedownloader.R;
+import com.marwaeltayeb.youtubedownloader.Utility.Constant;
 import com.marwaeltayeb.youtubedownloader.adapter.ItemAdapter;
 import com.marwaeltayeb.youtubedownloader.models.Item;
 import com.marwaeltayeb.youtubedownloader.network.ItemViewModel;
@@ -66,7 +67,7 @@ public class PlaylistActivity extends AppCompatActivity implements ItemAdapter.I
     public void onClick(String videoId) {
         Intent intent = new Intent(PlaylistActivity.this, DownloadActivity.class);
         // Pass the id of the video
-        intent.putExtra("id", videoId);
+        intent.putExtra(Constant.ID, videoId);
         startActivity(intent);
     }
 

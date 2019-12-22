@@ -3,7 +3,6 @@ package com.marwaeltayeb.youtubedownloader.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +14,7 @@ import com.commit451.youtubeextractor.VideoStream;
 import com.commit451.youtubeextractor.YouTubeExtraction;
 import com.commit451.youtubeextractor.YouTubeExtractor;
 import com.marwaeltayeb.youtubedownloader.R;
+import com.marwaeltayeb.youtubedownloader.Utility.Constant;
 import com.marwaeltayeb.youtubedownloader.adapter.DownloadAdapter;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
@@ -44,8 +44,8 @@ public class DownloadActivity extends AppCompatActivity {
 
         // Receive the id of teh video
         Intent intent = getIntent();
-        idOfVideo = intent.getStringExtra("id");
-        Toast.makeText(this, idOfVideo + "", Toast.LENGTH_SHORT).show();
+        idOfVideo = intent.getStringExtra(Constant.ID);
+        Log.d(TAG,idOfVideo + "");
 
         playYoutubeVideo();
 
