@@ -1,15 +1,16 @@
 package com.marwaeltayeb.youtubedownloader.activities;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
-import android.arch.paging.PagedList;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.paging.PagedList;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.marwaeltayeb.youtubedownloader.R;
 import com.marwaeltayeb.youtubedownloader.adapter.ItemAdapter;
@@ -28,7 +29,10 @@ public class PlaylistActivity extends AppCompatActivity implements ItemAdapter.I
         Intent intent = getIntent();
         keyWord = intent.getStringExtra(SearchActivity.KEYWORD);
 
-        // Setting up recyclerView
+        SetUpRecyclerView();
+    }
+
+    private void SetUpRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.playlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -56,8 +60,6 @@ public class PlaylistActivity extends AppCompatActivity implements ItemAdapter.I
 
         // Setting the adapter
         recyclerView.setAdapter(adapter);
-
-
     }
 
     @Override
@@ -67,4 +69,5 @@ public class PlaylistActivity extends AppCompatActivity implements ItemAdapter.I
         intent.putExtra("id", videoId);
         startActivity(intent);
     }
+
 }

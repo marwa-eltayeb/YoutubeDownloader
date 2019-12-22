@@ -2,21 +2,23 @@ package com.marwaeltayeb.youtubedownloader.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.commit451.youtubeextractor.VideoStream;
 import com.commit451.youtubeextractor.YouTubeExtraction;
 import com.commit451.youtubeextractor.YouTubeExtractor;
-import com.google.android.youtube.player.YouTubeBaseActivity;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerView;
 import com.marwaeltayeb.youtubedownloader.R;
-import com.marwaeltayeb.youtubedownloader.Utility.YoutubeConfig;
 import com.marwaeltayeb.youtubedownloader.adapter.DownloadAdapter;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
 import java.util.List;
 
@@ -25,13 +27,12 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class DownloadActivity extends YouTubeBaseActivity {
+public class DownloadActivity extends AppCompatActivity {
 
     String idOfVideo;
-    YouTubePlayerView youTubePlayerView;
-    YouTubePlayer.OnInitializedListener onInitializedListener;
     RecyclerView recyclerView;
     DownloadAdapter downloadAdapter;
+    YouTubePlayerView youTubePlayerView;
     List<VideoStream> videoStreams;
 
     private static final String TAG = "DownloadActivity";
@@ -44,6 +45,7 @@ public class DownloadActivity extends YouTubeBaseActivity {
         // Receive the id of teh video
         Intent intent = getIntent();
         idOfVideo = intent.getStringExtra("id");
+        Toast.makeText(this, idOfVideo + "", Toast.LENGTH_SHORT).show();
 
         playYoutubeVideo();
 
@@ -52,7 +54,7 @@ public class DownloadActivity extends YouTubeBaseActivity {
         showDownloadList();
     }
 
-    private void setUpRecyclerView(){
+    private void setUpRecyclerView() {
         recyclerView = findViewById(R.id.downloadList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -62,28 +64,20 @@ public class DownloadActivity extends YouTubeBaseActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
-    private void playYoutubeVideo(){
-        youTubePlayerView = findViewById(R.id.youtubePlay);
+    private void playYoutubeVideo() {
+        youTubePlayerView = findViewById(R.id.youtube_player_view);
+        getLifecycle().addObserver(youTubePlayerView);
 
-        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
+        youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
             @Override
-            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                Log.d(TAG, "Done initializing");
-                youTubePlayer.loadVideo(idOfVideo);
+            public void onReady(@NonNull YouTubePlayer youTubePlayer) {
+                youTubePlayer.loadVideo(idOfVideo, 0);
             }
-
-            @Override
-            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
-                Log.d(TAG, "Failed to initialize");
-            }
-        };
-
-        // Play it
-        youTubePlayerView.initialize(YoutubeConfig.getApiKey(), onInitializedListener);
+        });
     }
 
 
-    private void showDownloadList(){
+    private void showDownloadList() {
         YouTubeExtractor extractor1 = new YouTubeExtractor.Builder().build();
         final Disposable v = extractor1.extract(idOfVideo)
                 .subscribeOn(Schedulers.io())
@@ -94,10 +88,8 @@ public class DownloadActivity extends YouTubeBaseActivity {
                         Log.d("Tube", youTubeExtraction + "Done");
 
                         videoStreams = youTubeExtraction.getVideoStreams();
-                        downloadAdapter = new DownloadAdapter(getBaseContext(),videoStreams);
+                        downloadAdapter = new DownloadAdapter(getBaseContext(), videoStreams);
                         recyclerView.setAdapter(downloadAdapter);
-
-                        //final String url = String.valueOf(youTubeExtraction.getVideoStreams().get(0).getUrl());
 
                     }
                 }, new Consumer<Throwable>() {
@@ -109,6 +101,9 @@ public class DownloadActivity extends YouTubeBaseActivity {
     }
 
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        youTubePlayerView.release();
+    }
 }

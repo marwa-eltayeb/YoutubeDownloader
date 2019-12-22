@@ -5,7 +5,7 @@ public class YoutubeConfig {
     public YoutubeConfig() {
     }
 
-    private static final String API_KEY = "AIzaSyCLVF4cFbt7ajWqKy4qDPgcW12mcDzEGf4";
+    private static final String API_KEY = "AIzaSyDzOz6qKlbHhKipDK-CRx-C4tdRg9CxJrs";
 
     public static String getApiKey() {
         return API_KEY;
