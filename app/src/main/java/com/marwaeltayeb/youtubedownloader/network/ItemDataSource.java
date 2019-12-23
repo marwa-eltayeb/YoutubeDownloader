@@ -14,6 +14,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.marwaeltayeb.youtubedownloader.activities.PlaylistActivity.progressDialog;
+
 public class ItemDataSource extends PageKeyedDataSource<String, Item> {
 
     private static final String PART = "snippet";
@@ -31,6 +33,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
                         YoutubeApiResponse youtubeApiResponse = response.body();
 
                         if (youtubeApiResponse != null) {
+                            progressDialog.dismiss();
                             // Fetch data and pass the result  null for the previous page
                             callback.onResult(youtubeApiResponse.getItems(), null, youtubeApiResponse.getNextPageToken());
                         }
@@ -48,6 +51,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
                     @Override
                     public void onFailure(Call<YoutubeApiResponse> call, Throwable t) {
                         Log.d("onFailure", "Failed");
+                        progressDialog.dismiss();
                     }
                 });
     }
