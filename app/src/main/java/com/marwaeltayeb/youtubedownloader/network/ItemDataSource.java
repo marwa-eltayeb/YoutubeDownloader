@@ -26,7 +26,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
     public void loadInitial(@NonNull LoadInitialParams<String> params, @NonNull final LoadInitialCallback<String, Item> callback) {
 
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART, TYPE, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
+                .getYoutubeService().getVideos(PART, TYPE,"" , MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
@@ -38,8 +38,9 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
                             callback.onResult(youtubeApiResponse.getItems(), null, youtubeApiResponse.getNextPageToken());
                         }
 
-                        if (youtubeApiResponse.getItems() == null) {
+                        if (youtubeApiResponse == null) {
                             Log.d("Quota", "Quota of Youtube Data Api is finished");
+                            progressDialog.dismiss();
                             return;
                         }
 
@@ -59,14 +60,17 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
     @Override
     public void loadBefore(@NonNull final LoadParams<String> params, @NonNull final LoadCallback<String, Item> callback) {
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART, TYPE, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
+                .getYoutubeService().getVideos(PART, TYPE, params.key, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
                         YoutubeApiResponse youtubeApiResponse = response.body();
 
-                        String key = youtubeApiResponse.getPrevPageToken() != null ? params.key : null;
-                        if (response.body() != null) {
+                        String key = "";
+                        if (youtubeApiResponse != null) {
+                            key = youtubeApiResponse.getPrevPageToken();
+                            Log.d("loadBefore", key + "");
+
                             // Passing the loaded database and the previous page key
                             callback.onResult(youtubeApiResponse.getItems(), key);
                         }
@@ -83,7 +87,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
     @Override
     public void loadAfter(@NonNull final LoadParams<String> params, @NonNull final LoadCallback<String, Item> callback) {
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART, TYPE, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
+                .getYoutubeService().getVideos(PART, TYPE, params.key, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
@@ -91,7 +95,9 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
 
                         if (youtubeApiResponse != null) {
                             // If the response has next page, load it
-                            String key = youtubeApiResponse.getNextPageToken() != null ? params.key : null;
+                            String key = youtubeApiResponse.getNextPageToken();
+
+                            Log.d("loadAfter", key + "");
 
                             // Passing the loaded database and next page value
                             callback.onResult(youtubeApiResponse.getItems(), key);
