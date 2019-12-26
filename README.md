@@ -1,6 +1,7 @@
 # Description
 
-- Android App for searching for videos on Youtube using YouTube Data API and downloading them.
+- YoutubeDownloader is an application for searching for videos on Youtube by keywords, using YouTube Data API.
+- It that lets you download videos from YouTube in different formats.
 
 ## Libraries included in this project:
 
