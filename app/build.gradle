@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
     compileSdkVersion 28
@@ -9,6 +11,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "API_KEY", localProperties['apiKey']
     }
     buildTypes {
         release {
@@ -33,7 +37,7 @@ dependencies {
     def rxAndroid = "2.1.1"
     implementation "androidx.appcompat:appcompat:$support_version"
     // YouTubeExtractor
-    implementation "com.github.Commit451:YouTubeExtractor:$YouTubeExtractor"
+    //implementation "com.github.Commit451:YouTubeExtractor:$YouTubeExtractor"
     //  RxAndroid
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid"
     // Retrofit
