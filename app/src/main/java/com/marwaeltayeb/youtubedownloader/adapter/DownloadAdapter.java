@@ -3,6 +3,8 @@ package com.marwaeltayeb.youtubedownloader.adapter;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,18 +15,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.commit451.youtubeextractor.VideoStream;
 import com.marwaeltayeb.youtubedownloader.R;
 
 import java.util.List;
 
+import at.huber.youtubeExtractor.YtFile;
+
 public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.DownloadViewHolder> {
 
-    private Context mContext;
-    private List<VideoStream> videoStreamsList;
+    private final Context mContext;
+    private final List<YtFile> videoStreamsList;
     private int mItemSelected= -1;
 
-    public DownloadAdapter(Context mContext, List<VideoStream> videoStreamsList) {
+    public DownloadAdapter(Context mContext, List<YtFile> videoStreamsList) {
         this.mContext = mContext;
         this.videoStreamsList = videoStreamsList;
     }
@@ -38,10 +41,10 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
 
     @Override
     public void onBindViewHolder(@NonNull DownloadViewHolder holder, int position) {
-        VideoStream currentVideoStream = videoStreamsList.get(position);
+        YtFile currentVideoStream = videoStreamsList.get(position);
 
-        String resolution = currentVideoStream.getResolution() + " - ";
-        String format = currentVideoStream.getFormat().toLowerCase();
+        String resolution = String.valueOf(currentVideoStream.getFormat().getHeight()).replace("-1", "Audio") + " - ";
+        String format = currentVideoStream.getFormat().getExt();
 
         holder.resolutionTextView.setText(resolution);
         holder.formatTextView.setText(format);
@@ -74,7 +77,9 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
                     mItemSelected = getAdapterPosition();
                     notifyDataSetChanged();
                     String url = videoStreamsList.get(mItemSelected).getUrl();
+                    Log.d("url", url);
                     download(url);
+
                     Toast.makeText(mContext, "Download Started", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -88,9 +93,16 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
         DownloadManager.Request request = new DownloadManager.Request(uri);
         request.setTitle("Video File");
         request.setDescription("Downloading");
+        request.setDestinationInExternalFilesDir(mContext, Environment.DIRECTORY_DOWNLOADS, createRandomImageName());
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setVisibleInDownloadsUi(false);
 
         downloadmanager.enqueue(request);
     }
+
+
+     private String createRandomImageName() {
+        return "video" + Math.random() + ".mp4";
+    }
 }
+

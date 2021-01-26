@@ -14,7 +14,7 @@
         android:layout_weight=".3"
         android:textColor="#444444"
         android:layout_gravity="center"
-        android:textSize="25sp"
+        android:textSize="18sp"
         tools:text="360p" />
 
 
@@ -25,13 +25,13 @@
         android:layout_weight=".9"
         android:textColor="#444444"
         android:layout_gravity="center"
-        android:textSize="25sp"
+        android:textSize="18sp"
         tools:text="webm" />
 
     <ImageView
         android:id="@+id/img_download"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:src="@drawable/ic_file_download_black_24dp"
         android:contentDescription="@string/download" />
 </LinearLayout>

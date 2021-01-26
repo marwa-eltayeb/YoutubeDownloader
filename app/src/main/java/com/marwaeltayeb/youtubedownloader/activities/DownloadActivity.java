@@ -1,8 +1,10 @@
 package com.marwaeltayeb.youtubedownloader.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,9 +12,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.commit451.youtubeextractor.VideoStream;
-import com.commit451.youtubeextractor.YouTubeExtraction;
-import com.commit451.youtubeextractor.YouTubeExtractor;
 import com.marwaeltayeb.youtubedownloader.R;
 import com.marwaeltayeb.youtubedownloader.Utility.Constant;
 import com.marwaeltayeb.youtubedownloader.adapter.DownloadAdapter;
@@ -20,20 +19,21 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import at.huber.youtubeExtractor.VideoMeta;
+import at.huber.youtubeExtractor.YouTubeExtractor;
+import at.huber.youtubeExtractor.YtFile;
 
+@SuppressLint("StaticFieldLeak")
 public class DownloadActivity extends AppCompatActivity {
 
     String idOfVideo;
     RecyclerView recyclerView;
     DownloadAdapter downloadAdapter;
     YouTubePlayerView youTubePlayerView;
-    List<VideoStream> videoStreams;
 
     private static final String TAG = "DownloadActivity";
 
@@ -77,29 +77,33 @@ public class DownloadActivity extends AppCompatActivity {
     }
 
 
+
     private void showDownloadList() {
-        YouTubeExtractor extractor1 = new YouTubeExtractor.Builder().build();
-        final Disposable v = extractor1.extract(idOfVideo)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<YouTubeExtraction>() {
-                    @Override
-                    public void accept(final YouTubeExtraction youTubeExtraction) throws Exception {
-                        Log.d("Tube", youTubeExtraction + "Done");
+        new YouTubeExtractor(this) {
+            @Override
+            public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
 
-                        videoStreams = youTubeExtraction.getVideoStreams();
-                        downloadAdapter = new DownloadAdapter(getBaseContext(), videoStreams);
-                        recyclerView.setAdapter(downloadAdapter);
+                if (ytFiles != null) {
 
+                    Set<String> uniqueFiles = new HashSet<String>();
+                    ArrayList<YtFile> videoStreams = new ArrayList<YtFile>();
+
+                    // Iterate over ytFiles
+                    for (int i = 0, itag; i < ytFiles.size(); i++) {
+                        itag = ytFiles.keyAt(i);
+                        String format = ytFiles.get(itag).getFormat().getHeight() + ytFiles.get(itag).getFormat().getExt();
+                        boolean isAdded = uniqueFiles.add(format);
+                        if (isAdded) {
+                            videoStreams.add(ytFiles.get(itag));
+                        }
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.d("Tube", "Error");
-                    }
-                });
+
+                    downloadAdapter = new DownloadAdapter(getBaseContext(), videoStreams);
+                    recyclerView.setAdapter(downloadAdapter);
+                }
+            }
+        }.extract(getString(R.string.youtube_link) + idOfVideo, true, true);
     }
-
 
     @Override
     protected void onDestroy() {

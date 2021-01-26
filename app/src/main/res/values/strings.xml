@@ -34,4 +34,5 @@
     <string name="date_util_prefix_almost">almost</string>
 
     <string name="date_util_suffix">ago</string>
+    <string name="youtube_link">"https://www.youtube.com/watch?v="</string>
 </resources>
