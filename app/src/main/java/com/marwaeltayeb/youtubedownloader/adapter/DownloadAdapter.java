@@ -1,9 +1,6 @@
 package com.marwaeltayeb.youtubedownloader.adapter;
 
-import android.app.DownloadManager;
 import android.content.Context;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +24,12 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
     private final List<YtFile> videoStreamsList;
     private int mItemSelected= -1;
 
-    public DownloadAdapter(Context mContext, List<YtFile> videoStreamsList) {
+    CallBack callBack;
+
+    public DownloadAdapter(Context mContext, List<YtFile> videoStreamsList, CallBack callBack) {
         this.mContext = mContext;
         this.videoStreamsList = videoStreamsList;
+        this.callBack = callBack;
     }
 
     @NonNull
@@ -78,31 +78,17 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
                     notifyDataSetChanged();
                     String url = videoStreamsList.get(mItemSelected).getUrl();
                     Log.d("url", url);
-                    download(url);
 
+                    callBack.onClickItem(url);
                     Toast.makeText(mContext, "Download Started", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-    private void download(String url){
-        DownloadManager downloadmanager = (DownloadManager) mContext.getSystemService(Context.DOWNLOAD_SERVICE);
-        Uri uri = Uri.parse(url);
-
-        DownloadManager.Request request = new DownloadManager.Request(uri);
-        request.setTitle("Video File");
-        request.setDescription("Downloading");
-        request.setDestinationInExternalFilesDir(mContext, Environment.DIRECTORY_DOWNLOADS, createRandomImageName());
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setVisibleInDownloadsUi(false);
-
-        downloadmanager.enqueue(request);
-    }
-
-
-     private String createRandomImageName() {
-        return "video" + Math.random() + ".mp4";
+    public interface CallBack {
+        void onClickItem(String url);
     }
 }
+
 

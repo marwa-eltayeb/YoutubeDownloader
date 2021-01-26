@@ -1,13 +1,21 @@
 package com.marwaeltayeb.youtubedownloader.activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +37,8 @@ import at.huber.youtubeExtractor.YtFile;
 
 @SuppressLint("StaticFieldLeak")
 public class DownloadActivity extends AppCompatActivity {
+
+    private static final int WRITE_STORAGE_PERMISSION_REQUEST_CODE = 1000;
 
     String idOfVideo;
     RecyclerView recyclerView;
@@ -98,7 +108,17 @@ public class DownloadActivity extends AppCompatActivity {
                         }
                     }
 
-                    downloadAdapter = new DownloadAdapter(getBaseContext(), videoStreams);
+                    downloadAdapter = new DownloadAdapter(getBaseContext(), videoStreams, new DownloadAdapter.CallBack() {
+                        @Override
+                        public void onClickItem(String url) {
+                            boolean granted = checkPermissionForWriteExternalStorage();
+                            if (!granted) {
+                                requestPermissionForWriteExternalStorage();
+                            } else {
+                                download(url);
+                            }
+                        }
+                    });
                     recyclerView.setAdapter(downloadAdapter);
                 }
             }
@@ -109,5 +129,39 @@ public class DownloadActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         youTubePlayerView.release();
+    }
+
+    private void download(String url){
+        DownloadManager downloadmanager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        Uri uri = Uri.parse(url);
+
+        DownloadManager.Request request = new DownloadManager.Request(uri);
+        request.setTitle("Video File");
+        request.setDescription("Downloading");
+        request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, createRandomImageName());
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setVisibleInDownloadsUi(false);
+
+        downloadmanager.enqueue(request);
+    }
+
+    private String createRandomImageName() {
+        return "video" + Math.random() + ".mp4";
+    }
+
+    public boolean checkPermissionForWriteExternalStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+    public void requestPermissionForWriteExternalStorage() {
+        try {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_STORAGE_PERMISSION_REQUEST_CODE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
