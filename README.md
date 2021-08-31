@@ -21,4 +21,6 @@
 Project Preview: [Youtube](https://youtu.be/EQcU-VcBVmI).
 
 
-Note: Use your Api key as there are limited Youtube quotas.
+Note: Use your Api key as there are limited Youtube quotas. After you get it, put it in local.properties file 
+
+`apiKey="XXXXXXXXXXXXXXXXXXXXXXXX"`
