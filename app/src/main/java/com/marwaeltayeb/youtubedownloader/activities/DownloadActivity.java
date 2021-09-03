@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.util.SparseArray;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,7 +94,10 @@ public class DownloadActivity extends AppCompatActivity {
             @Override
             public void onExtractionComplete(SparseArray<YtFile> ytFiles, VideoMeta vMeta) {
 
+
                 if (ytFiles != null) {
+
+                    Log.d(TAG, "ytFiles: "+ "Hello");
 
                     Set<String> uniqueFiles = new HashSet<String>();
                     ArrayList<YtFile> videoStreams = new ArrayList<YtFile>();
@@ -108,6 +112,8 @@ public class DownloadActivity extends AppCompatActivity {
                         }
                     }
 
+                    Log.d(TAG, "onExtractionComplete: "+ videoStreams.size());
+
                     downloadAdapter = new DownloadAdapter(getBaseContext(), videoStreams, new DownloadAdapter.CallBack() {
                         @Override
                         public void onClickItem(String url) {
@@ -120,6 +126,8 @@ public class DownloadActivity extends AppCompatActivity {
                         }
                     });
                     recyclerView.setAdapter(downloadAdapter);
+                }else {
+                    Toast.makeText(DownloadActivity.this, "No Download Files for this video", Toast.LENGTH_SHORT).show();
                 }
             }
         }.extract(getString(R.string.youtube_link) + idOfVideo, true, true);
