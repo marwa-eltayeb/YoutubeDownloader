@@ -1,0 +1,36 @@
+name: Build
+
+on: push
+
+jobs:
+  builds:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Set Up SDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Touch local properties
+        run: touch local.properties
+
+      - name: Add Api Key
+        run: echo "apiKey=\"\"" >> local.properties
+
+      - name: Run Tests
+        run: ./gradlew test
+
+      - name: Build Projects
+        run: ./gradlew assemble
