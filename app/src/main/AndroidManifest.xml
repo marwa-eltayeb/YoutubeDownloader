@@ -15,33 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activities.SearchActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".activities.PlaylistActivity"
-            android:label="@string/playlist"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activities.SearchActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.SearchActivity" />
-        </activity>
-
-        <activity
-            android:name=".activities.DownloadActivity"
-            android:label="@string/download"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activities.PlaylistActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.PlaylistActivity" />
         </activity>
     </application>
 </manifest>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.marwaeltayeb.youtubedownloader.activities.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+
+        <argument android:name="keyword"
+            app:argType="string"
+            android:defaultValue="None"/>
+
+        <action
+            android:id="@+id/action_searchFragment_to_playlistFragment"
+            app:destination="@id/playlistFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/playlistFragment"
+        android:name="com.marwaeltayeb.youtubedownloader.activities.PlaylistFragment"
+        android:label="@string/playlist"
+        tools:layout="@layout/fragment_playlist">
+
+        <argument
+            android:name="videoId"
+            app:argType="string"
+            android:defaultValue="None" />
+
+        <action
+            android:id="@+id/action_playlistFragment_to_downloadFragment"
+            app:destination="@id/downloadFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/downloadFragment"
+        android:name="com.marwaeltayeb.youtubedownloader.activities.DownloadFragment"
+        android:label="@string/download"
+        tools:layout="@layout/fragment_download" />
+</navigation>

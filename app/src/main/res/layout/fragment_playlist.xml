@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".activities.PlaylistActivity">
+    tools:context=".activities.PlaylistFragment">
 
     <TextView
         android:id="@+id/no_movies_found"
@@ -24,5 +24,5 @@
         android:id="@+id/playlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/playlist_item"/>
+        tools:listitem="@layout/item_playlist"/>
 </LinearLayout>

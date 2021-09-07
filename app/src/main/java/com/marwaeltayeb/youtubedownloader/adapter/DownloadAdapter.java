@@ -35,7 +35,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
     @NonNull
     @Override
     public DownloadViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.download_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_download, parent, false);
         return new DownloadViewHolder(view);
     }
 
@@ -90,5 +90,3 @@ public class DownloadAdapter extends RecyclerView.Adapter<DownloadAdapter.Downlo
         void onClickItem(String url);
     }
 }
-
-

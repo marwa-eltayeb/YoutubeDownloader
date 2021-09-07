@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: "androidx.navigation.safeargs"
+
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
@@ -42,6 +44,7 @@ dependencies {
     def youtube_extractor_version = "2.1.0"
     def rxAndroid = "2.1.1"
     def youtube_player_version = "10.0.5"
+    def nav_version = "2.3.5"
 
     implementation "androidx.appcompat:appcompat:$support_version"
     // YouTubeExtractor
@@ -63,4 +66,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
     implementation "com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtube_player_version"
+    // Navigation Component
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
 }

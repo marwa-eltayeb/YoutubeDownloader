@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SearchActivity">
+    tools:context=".activities.SearchFragment">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -38,7 +38,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="178dp"
         android:background="#F5F5F5"
-        android:onClick="Search"
         android:textColor="#525252"
         android:text="@string/search" />
 </RelativeLayout>

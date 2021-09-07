@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
 import com.marwaeltayeb.youtubedownloader.Utility.YoutubeConfig;
-import com.marwaeltayeb.youtubedownloader.activities.PlaylistActivity;
+import com.marwaeltayeb.youtubedownloader.activities.PlaylistFragment;
 import com.marwaeltayeb.youtubedownloader.models.Item;
 import com.marwaeltayeb.youtubedownloader.models.YoutubeApiResponse;
 
@@ -14,7 +14,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.marwaeltayeb.youtubedownloader.activities.PlaylistActivity.progressDialog;
+import static com.marwaeltayeb.youtubedownloader.activities.PlaylistFragment.progressDialog;
 
 public class ItemDataSource extends PageKeyedDataSource<String, Item> {
 
@@ -26,7 +26,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
     public void loadInitial(@NonNull LoadInitialParams<String> params, @NonNull final LoadInitialCallback<String, Item> callback) {
 
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART, TYPE,"" , MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
+                .getYoutubeService().getVideos(PART, TYPE,"" , MAX_SIZE, PlaylistFragment.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
@@ -60,7 +60,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
     @Override
     public void loadBefore(@NonNull final LoadParams<String> params, @NonNull final LoadCallback<String, Item> callback) {
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART, TYPE, params.key, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
+                .getYoutubeService().getVideos(PART, TYPE, params.key, MAX_SIZE, PlaylistFragment.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {
@@ -87,7 +87,7 @@ public class ItemDataSource extends PageKeyedDataSource<String, Item> {
     @Override
     public void loadAfter(@NonNull final LoadParams<String> params, @NonNull final LoadCallback<String, Item> callback) {
         RetrofitClient.getInstance()
-                .getYoutubeService().getVideos(PART, TYPE, params.key, MAX_SIZE, PlaylistActivity.keyWord, YoutubeConfig.getApiKey())
+                .getYoutubeService().getVideos(PART, TYPE, params.key, MAX_SIZE, PlaylistFragment.keyWord, YoutubeConfig.getApiKey())
                 .enqueue(new Callback<YoutubeApiResponse>() {
                     @Override
                     public void onResponse(Call<YoutubeApiResponse> call, Response<YoutubeApiResponse> response) {

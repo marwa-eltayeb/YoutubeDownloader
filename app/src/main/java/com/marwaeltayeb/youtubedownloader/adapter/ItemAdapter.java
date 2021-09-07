@@ -24,11 +24,10 @@ import java.util.Date;
 
 public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHolder> {
 
-    private Context mCtx;
-    private int mItemSelected= -1;
+    private final Context mContext;
 
     // Create a final private ItemAdapterOnClickHandler called mClickHandler
-    private ItemAdapterOnClickHandler clickHandler;
+    private final ItemAdapterOnClickHandler clickHandler;
 
     /**
      * The interface that receives onClick messages.
@@ -37,16 +36,16 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
         void onClick(String videoId);
     }
 
-    public ItemAdapter(Context mCtx, ItemAdapterOnClickHandler clickHandler) {
+    public ItemAdapter(Context context, ItemAdapterOnClickHandler clickHandler) {
         super(DIFF_CALLBACK);
-        this.mCtx = mCtx;
+        this.mContext = context;
         this.clickHandler = clickHandler;
     }
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.playlist_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_playlist, parent, false);
         return new ItemViewHolder(view);
     }
 
@@ -58,17 +57,17 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
         if (item != null) {
             holder.videoTitle.setText(item.getSnippet().getTitle());
             // Load the video image into ImageView
-            Glide.with(mCtx)
+            Glide.with(mContext)
                     .load(item.getSnippet().getThumbnail().getImageInfo().getUrl())
                     .into(holder.videoImage);
 
             holder.channelTitle.setText(item.getSnippet().getChannelTitle());
 
             Date convertedDate = DateUtils.convertStringToDate(item.getSnippet().getPublishedAt());
-            String timeAgo = DateUtils.getTimeAgo(convertedDate,mCtx);
+            String timeAgo = DateUtils.getTimeAgo(convertedDate,mContext);
             holder.publicationDate.setText(timeAgo);
         } else {
-            Toast.makeText(mCtx, "Item is null", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, "Item is null", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -113,8 +112,7 @@ public class ItemAdapter extends PagedListAdapter<Item, ItemAdapter.ItemViewHold
         @Override
         public void onClick(View v) {
             // Get the position of the view in the adapter
-            mItemSelected = getAdapterPosition();
-            notifyDataSetChanged();
+            int mItemSelected = getAdapterPosition();
             // Get the id of the video
             String videoId = getCurrentList().get(mItemSelected).getVideoId().getId();
             if(videoId == null){
