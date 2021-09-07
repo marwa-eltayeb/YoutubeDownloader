@@ -14,6 +14,7 @@
 - Glide
 - Retrofit
 - Gson
+- Navigation Component
 
 ## Screenshots
  <img src="https://i.imgur.com/8vARfhm.png" width="250" height="418">  <img src="https://i.imgur.com/i7i7nx6.png" width="250" height="418">  <img src="https://i.imgur.com/qPCfOLs.png" width="250" height="418">  
