@@ -14,6 +14,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,7 +66,7 @@ public class DownloadFragment extends Fragment {
         if (bundle != null) {
             idOfVideo = bundle.getString(VIDEO_ID);
         }
-        Log.d(TAG,idOfVideo);
+        Log.d(TAG, idOfVideo);
 
         recyclerView = view.findViewById(R.id.downloadList);
         youTubePlayerView = view.findViewById(R.id.youtube_player_view);
@@ -129,6 +130,8 @@ public class DownloadFragment extends Fragment {
                         }
                     });
                     recyclerView.setAdapter(downloadAdapter);
+                } else {
+                    Toast.makeText(getContext(), "No Download Files for this video", Toast.LENGTH_SHORT).show();
                 }
             }
         }.extract(getString(R.string.youtube_link) + idOfVideo, true, true);
@@ -140,7 +143,7 @@ public class DownloadFragment extends Fragment {
         youTubePlayerView.release();
     }
 
-    private void download(String url){
+    private void download(String url) {
         DownloadManager downloadmanager = (DownloadManager) getActivity().getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(url);
 
