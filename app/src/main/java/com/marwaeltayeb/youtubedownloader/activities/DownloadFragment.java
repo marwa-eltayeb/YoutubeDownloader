@@ -39,11 +39,10 @@ import at.huber.youtubeExtractor.YouTubeExtractor;
 import at.huber.youtubeExtractor.YtFile;
 
 import static com.marwaeltayeb.youtubedownloader.Utility.Constant.VIDEO_ID;
+import static com.marwaeltayeb.youtubedownloader.Utility.Constant.WRITE_STORAGE_PERMISSION_REQUEST_CODE;
 
 @SuppressLint("StaticFieldLeak")
 public class DownloadFragment extends Fragment {
-
-    private static final int WRITE_STORAGE_PERMISSION_REQUEST_CODE = 1000;
 
     String idOfVideo;
     RecyclerView recyclerView;
@@ -136,8 +135,8 @@ public class DownloadFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         youTubePlayerView.release();
     }
 
